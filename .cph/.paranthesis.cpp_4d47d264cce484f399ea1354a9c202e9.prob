@@ -1,0 +1,1 @@
+{"name":"Local: paranthesis","url":"c:\\DSA\\lab3\\paranthesis.cpp","tests":[{"id":1663445787124,"input":"20\n]{]{[[()}}","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\DSA\\lab3\\paranthesis.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: contst","url":"c:\\DSA\\lab3\\contst.cpp","tests":[{"id":1661878208945,"input":"10\n5\nTimur\n5\nmiurT\n5\nTrumi\n5\nmriTu\n5\ntimur\n4\nTimr\n6\nTimuur\n10\ncodeforces\n10\nTimurTimur\n5\nTIMUR","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\DSA\\lab3\\contst.cpp","group":"local","local":true}
