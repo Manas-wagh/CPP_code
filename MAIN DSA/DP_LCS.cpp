@@ -88,11 +88,5 @@ int main()
 
     string s1 = "manas";
     string s2 = "manasvi";
-
-    cout << LCS(s1, s2, 5, 7);
-    cout << endl;
-    cout << LCSmemo(s1, s2, 5, 7);
-    cout << endl;
-    cout << LCStab(s1, s2, 5, 7);
     return 0;
 }
