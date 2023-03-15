@@ -283,7 +283,7 @@ void H_quick_sort(int *a, int l, int h)
     if (l < h) // implies that agar ek ya usse kam ele bache hei toh kuch mat karo;
     {
         int p = haorepartition(a, l, h);
-        H_quick_sort(a, l, p - 1);
+        H_quick_sort(a, l, p);
         H_quick_sort(a, p + 1, h);
     }
 }

@@ -1,52 +1,79 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-vector<string> v;
-string longestNiceSubstring(string s)
+
+int minsum(int *arr, int n, int val)
 {
-    map<int, int> mp;
-    for (int i = 0; i < s.length(); ++i)
-        mp[int(s[i])]++;
-    vector<int> def;
-    def.push_back(-1);
-    for (int i = 0; i < s.length(); ++i)
+    int dp[val + 1];
+    for (int i = 0; i < val + 1; i++)
     {
-        if (int(s[i]) < 97 && mp[int(s[i])] && !mp[s[i] - 'A' + 97])
-            def.push_back(i);
-        else if (int(s[i]) >= 97 && mp[int(s[i])] && !mp[s[i] - 'a' + 65])
-            def.push_back(i);
+        dp[i] = 0;
     }
-    def.push_back(s.length());
-    if (def.size() == 2)
+
+    for (int i = 1; i < val + 1; i++)
     {
-        v.push_back(s);
-        return s;
-    }
-    for (int i = 0; i < def.size() - 1; ++i)
-    {
-        int l = def[i] + 1, r = def[i + 1] - 1;
-        string p = s.substr(l, r - l + 1);
-        // cout << p << endl;
-        longestNiceSubstring(p);
-    }
-    int l = 0;
-    v.push_back("");
-    string ans;
-    for (int i = 0; i < v.size(); ++i)
-    {
-        if (v[i].length() > l)
+        for (int j = 0; j < n; j++)
         {
-            l = v[i].length();
-            ans = v[i];
         }
     }
-    return ans;
+    return dp[val];
+}
+
+int SSdp(int *arr, int n, int sum)
+{
+    int dp[n + 1][sum + 1];
+    for (int i = 0; i < n + 1; i++)
+    {
+        dp[i][0] = 1;
+    }
+    for (int i = 1; i < sum + 1; i++)
+    {
+        dp[0][i] = 0;
+    }
+    for (int i = 1; i < n + 1; i++)
+    {
+        for (int j = 1; j < sum + 1; j++)
+        {
+            if (j >= arr[i - 1])
+            {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - arr[i - 1]];
+            }
+            else
+            {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+    return dp[n][sum];
+}
+
+int profit(int *price, int t)
+{
+
+    int a = 1, b = 2;
+    int profit = 0;
+    while (b <= t - 1)
+    {
+        if (price[a] <= price[b])
+        {
+            profit += price[b] - price[a];
+            a++;
+            b++;
+        }
+        else
+        {
+            a = b;
+            b++;
+        }
+    }
+    return profit;
 }
 
 int main()
 {
-
-    cout << longestNiceSubstring("YazaAay");
-
+    int arr[6] = {5};
+    cout << SSdp(arr, 1, 1);
+    cout << endl;
+    int at[7] = {0, 7, 1, 5, 3, 6, 4};
+    cout << profit(at, 7);
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: nn","url":"e:\\data backup\\DSA\\ALL CODES\\nn.cpp","tests":[{"id":1676561219650,"input":"9\n2 100\n3 200\n4 300\n5 500\n5 400\n5 250\n6 370\n6 360\n7 380","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\data backup\\DSA\\ALL CODES\\nn.cpp","group":"local","local":true}
