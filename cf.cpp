@@ -1,49 +1,77 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int soln()
-{
-    int n;
-    cin >> n;
-
-    int arr[n][3];
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            cin >> arr[i][j];
-        }
-    }
-    int dp[n + 1][3];
-    for (int i = 0; i < 3; i++)
-    {
-        dp[0][i] = 0;
-    }
-
-    for (int i = 1; i < n + 1; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            dp[i][j] = min(dp[i - 1][(j + 1) % 3], dp[i - 1][(j + 2) % 3]) + arr[i - 1][j];
-        }
-    }
-    cout << endl;
-    for (int i = 0; i < n + 1; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-    return min(dp[n][0], min(dp[n][1], dp[n][2]));
-}
-
 int main()
 {
 
-    cout << soln();
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int manas[2][n];
+        for (int i = 0; i < n; i++)
+        {
+            if (i % 2 == 0)
+            {
+                manas[0][i] = 1;
+            }
+            else
+            {
+                manas[0][i] = -1;
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            if (i % 2 == 0)
+            {
+                manas[1][i] = -1;
+            }
+            else
+            {
+                manas[1][i] = 1;
+            }
+        }
 
+        manas[0][0] = (2 * n) - 1;
+        manas[1][n - 1] = (2 * n);
+        int k = (2 * n) - 2;
+        int zz = 0;
+        for (int i = 0; i < n - 1; i = i + 2)
+        {
+
+            manas[1][i] = (2 * zz) + 1;
+            zz++;
+        }
+        for (int i = 1; i < n - 1; i = i + 2)
+        {
+
+            manas[1][i] = (2 * zz) + 1;
+            zz++;
+        }
+        zz = 1;
+        for (int i = 1; i < n; i = i + 2)
+        {
+
+            manas[0][i] = (2 * zz);
+            zz++;
+        }
+        for (int i = 2; i < n - 1; i = i + 2)
+        {
+
+            manas[0][i] = (2 * zz);
+            zz++;
+        }
+        // cout<<endl;
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                cout << manas[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
     return 0;
 }

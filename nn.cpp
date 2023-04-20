@@ -1,94 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int ceilind(int *arr, int l, int r, int x)
+int minsquare(int *arr, int n, int value)
 {
-    while (r > l)
+    int dp[value + 1];
+    for (int i = 1; i < value + 1; i++)
     {
-        int mid = l + (r - l) / 2;
-        if (arr[mid] >= x)
-        {
-            r = mid;
-        }
-        else
-        {
-            l = mid + 1;
-        }
+        dp[i] = INT16_MAX;
     }
-    return r;
-}
-
-int LIS(set<pair<int, int>> p, int n)
-{
-    int arr[p.size()];
-    int arr2[p.size()];
-    int call;
-    int c = 0;
-    call = 0;
-    if (p.size() == 1)
+    dp[0] = 0;
+    for (int i = 1; i < value + 1; i++)
     {
-        return 1;
-    }
-    for (auto i : p)
-    {
-        arr[c] = i.second;
-        arr2[c] = i.first;
-        c++;
-    }
-    // for (int i = 0; i < p.size(); i++)
-    // {
-    //     cout << arr[i] << endl;
-    // }
-    int tail[p.size()];
-    tail[0] = arr[0];
-    int len = 1;
-
-    for (int i = 1; i < p.size(); i++)
-    {
-        if (arr[i] > tail[len - 1] && (arr2[i] != arr2[call]))
+        for (int j = 0; j < n; j++)
         {
-            tail[len] = arr[i];
-            len++;
-            call = i;
-        }
-        else if (arr2[i] == arr2[call])
-        {
-        }
-        else
-        {
-            int c = ceilind(tail, 0, len - 1, arr[i]);
-            if (c == len - 1)
+            if (arr[j] <= i)
             {
-            }
-            else
-            {
-                tail[c] = arr[i];
+                if (dp[i - arr[j]] != INT16_MAX)
+                {
+                    dp[i] = min(dp[i], dp[i - arr[j]] + 1);
+                }
             }
         }
     }
-    return len;
+    return dp[value];
 }
 
 int main()
 {
-
-    int m, n;
-    cin >> n;
-    set<pair<int, int>> arr;
-
-    for (int i = 0; i < n; i++)
+    int val;
+    cin >> val;
+    int prefix[100];
+    for (int i = 0; i < 100; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        arr.insert(make_pair(x, y));
+        prefix[i] = (i + 1) * (i + 1);
     }
 
-    for (auto i : arr)
-    {
-        cout << i.first << " " << i.second << endl;
-    }
-
-    cout << LIS(arr, n) << endl;
+    cout << minsquare(prefix, 100, val);
 
     return 0;
 }

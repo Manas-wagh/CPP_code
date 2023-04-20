@@ -1,0 +1,1 @@
+{"name":"Local: 1","url":"c:\\Users\\Lenovo\\DAA_LAB\\Assignment3\\1.cpp","tests":[{"id":1675939555961,"input":"4 4 \n102\n473\n251\n814\n1 1 \n2 3\n4 2\n1 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Lenovo\\DAA_LAB\\Assignment3\\1.cpp","group":"local","local":true}

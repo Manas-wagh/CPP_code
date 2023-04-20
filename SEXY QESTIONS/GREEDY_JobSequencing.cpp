@@ -25,7 +25,7 @@ double FKnapsack(pair<int, int> arr[], int n)
         {
         }
     }
-
+    cout << curr_t << endl;
     return res;
 }
 
@@ -34,8 +34,11 @@ int main()
 
     int t;
     cin >> t;
-    while (t--)
+    pair<int, int> arr[t];
+    for (int i = 0; i < t; i++)
     {
+        cin >> arr[i].first >> arr[i].second;
     }
+    cout << FKnapsack(arr, t);
     return 0;
 }

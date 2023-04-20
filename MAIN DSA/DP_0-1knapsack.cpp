@@ -16,6 +16,7 @@ int knapsack(int *val, int *wt, int n, int W)
             return knapsack(val, wt, n - 1, W);
         }
         else
+        
         {
             return max(knapsack(val, wt, n - 1, W), knapsack(val, wt, n - 1, W - wt[n - 1]) + val[n - 1]);
         }

@@ -18,6 +18,5 @@ int matmult(int *arr, int i, int j)
 
 int main()
 {
-
     return 0;
 }
