@@ -29,6 +29,20 @@ string findDigitsInBinary(int A)
     return ans;
 }
 
+// total number of diffrent bits;
+int hammingDistance(int x, int y)
+{
+    int c = 0;
+    for (int i = 0; i <= 31; i++)
+    {
+        int a = (x >> i) & 1;
+        int b = (y >> i) & 1;
+        if (a != b)
+            c++;
+    }
+    return c;
+}
+
 int main()
 {
     return 0;
