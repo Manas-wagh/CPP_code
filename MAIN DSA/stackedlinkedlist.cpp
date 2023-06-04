@@ -4,7 +4,6 @@ using namespace std;
 // head ko top bolte he......ie stack me linked list ulti hoti he
 // ie insertion and deletion is performed for head. in O(1) time.
 
-
 class node
 {
 public:

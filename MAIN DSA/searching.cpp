@@ -41,11 +41,11 @@ int BinarySearchRec(int arr[], int l, int h, int x)
     }
     else if (x < arr[mid])
     {
-        BinarySearchRec(arr, l, mid - 1, x);
+        return BinarySearchRec(arr, l, mid - 1, x);
     }
     else
     {
-        BinarySearchRec(arr, mid + 1, h, x);
+        return BinarySearchRec(arr, mid + 1, h, x);
     }
 }
 
@@ -53,23 +53,20 @@ int BinarySearchRec(int arr[], int l, int h, int x)
 
 int Squrt(int x)
 {
-    int l = 1, h = x, ans = -1;
-
-    while (l <= h)
+    if (x == 0)
+        return 0;
+    int start = 1, end = x, ans;
+    while (start <= end)
     {
-        int mid = (l + h) / 2;
-        if (x == mid * mid)
+        int mid = (start + end) / 2;
+        if (mid <= x / mid)
         {
-            return mid;
-        }
-        else if (x < mid * mid)
-        {
-            h = mid - 1;
+            start = mid + 1;
+            ans = mid;
         }
         else
         {
-            l = mid + 1;
-            ans = mid;
+            end = mid - 1;
         }
     }
     return ans;
@@ -91,7 +88,7 @@ int main()
 
     // cout << BinarySearch(arr, n, x);
 
-    cout << Squrt(10000);
+    cout << Squrt(2147483647);
 
     return 0;
 }

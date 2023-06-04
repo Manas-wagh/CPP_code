@@ -1,43 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string solve(string sec, string ges)
+struct ListNode
 {
-    int hash[10] = {0};
-    int bull = 0;
-    int cow = 0;
-    for (int i = 0; i < sec.size(); i++)
-    {
-        hash[sec[i] - 48] += 1;
-    }
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
 
-    for (int i = 0; i < sec.size(); i++)
+string simplifyPath(string arr)
+{
+    stack<char> s;
+    for (int i = 0; i < arr.size(); i++)
     {
-        if (ges[i] == sec[i] && hash[ges[i] - 48] > 0)
+        if (arr[i] == '/')
         {
-            bull++;
-            hash[ges[i] - 48]--;
+            if (s.empty() == true)
+            {
+                s.push('/');
+            }
+            else
+            {
+                if (s.top() != '/')
+                {
+                    s.push('/');
+                }
+            }
         }
-        else if (ges[i] != sec[i] && hash[ges[i] - 48] > 0)
+        else if (arr[i] == '.')
         {
-            cow++;
-            hash[ges[i] - 48]--;
+            while (s.empty() == false && s.top() != '/')
+            {
+                s.pop();
+            }
+            if (s.empty() == false)
+            {
+                s.pop();
+            }
         }
         else
         {
+            s.push(arr[i]);
         }
     }
-    return to_string(bull) + "A" + to_string(cow) + "B";
+    if (s.empty() == false && s.top() == '/')
+    {
+        s.pop();
+    }
+    string str = "";
+    stack<char> temp;
+    while (s.empty() != true)
+    {
+        char x = s.top();
+        s.pop();
+        temp.push(x);
+    }
+    while (temp.empty() != true)
+    {
+        char x = temp.top();
+        str.push_back(x);
+        temp.pop();
+    }
+    return str;
 }
+
 int main()
 {
-
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        cout << solve("6020943525972", "7157627311068");
-    }
-
+    ListNode *A = new ListNode(1);
+    ListNode *b = new ListNode(2);
+    ListNode *c = new ListNode(3);
+    A->val = 5;
+    A->next = b;
+    b->next = c;
+    c->next = NULL;
+    cout << simplifyPath("/a/./b/");
     return 0;
 }
