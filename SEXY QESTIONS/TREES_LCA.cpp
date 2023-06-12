@@ -70,10 +70,6 @@ int main()
 
     while (t--)
     {
-        string s;
-        char i = 4;
-        s.push_back(i + 48);
-        cout << s;
     }
     return 0;
 }
