@@ -1,64 +1,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct TreeNode
+struct TrieNode
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    TrieNode *child[26];
+    bool isEnd;
+    TrieNode()
+    {
+        isEnd = false;
+        for (int i = 0; i < 26; i++)
+        {
+            child[i] = NULL;
+        }
+    }
 };
 
-/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-bool findPath(TreeNode *root, vector<int> &path, int k)
+bool search(TrieNode *root, string &s)
 {
-    // base case
-    if (root == NULL)
-        return false;
-
-    // Store this node in path vector. The node will be removed if
-    // not in path from root to k
-    path.push_back(root->val);
-
-    // See if the k is same as root's key
-    if (root->val == k)
-        return true;
-
-    // Check if k is found in left or right sub-tree
-    if ((root->left && findPath(root->left, path, k)) ||
-        (root->right && findPath(root->right, path, k)))
-        return true;
-
-    // If not present in subtree rooted with root, remove root from
-    // path[] and return false
-    path.pop_back();
-    return false;
+    for (int i = 0; i < s.size(); i++)
+    {
+        int ind = s[i] - 'a';
+        if (root->child[ind] == NULL)
+        {
+            return false;
+        }
+        root = root->child[ind];
+    }
+    return root->isEnd;
 }
 
-int lca(TreeNode *A, int val1, int val2)
+void insert(TrieNode *root, string &s)
 {
+    for (int i = 0; i < s.size(); i++)
+    {
+        int ind = s[i] - 'a';
+        if (root->child[ind] == NULL)
+        {
+            root->child[ind] = new TrieNode();
+        }
+        root = root->child[ind];
+    }
+    root->isEnd = true;
+}
 
-    vector<int> path1, path2;
+bool isempty(TrieNode *root)
+{
+    for (int i = 0; i < 26; i++)
+    {
+        if (root->child[i] != NULL)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
-    // Find paths from root to n1 and root to n1. If either n1 or n2
-    // is not present, return -1
-    if (!findPath(A, path1, val1) || !findPath(A, path2, val2))
-        return -1;
+vector<int> solve(string A, vector<string> &B)
+{
+    vector<int> ans;
+    TrieNode *root = new TrieNode();
+    int i = 0;
+    int j = 0;
+    while (j < A.size())
+    {
+        if (A[j] == '_')
+        {
+            insert(root, A.substr(i, j - i));
+            i = j + 1;
+        }
+        j++;
+    }
+    vector<pair<int, int>> cnt;
 
-    /* Compare the paths to get the first different value */
-    int i;
-    for (i = 0; i < path1.size() && i < path2.size(); ++i)
-        if (path1[i] != path2[i])
-            break;
-    return path1[i - 1];
+    for (int m = 0; m < B.size(); m++)
+    {
+        cnt.push_back({0, m});
+        j = 0;
+        i = 0;
+        while (j < B[m].size())
+        {
+            if (A[j] == '_')
+            {
+                if (search(root, B[m].substr(i, j - i)))
+                {
+                    cnt[cnt.size() - 1].first++;
+                }
+                i = j + 1;
+            }
+            j++;
+        }
+    }
+    sort(cnt.begin(), cnt.end());
+    for (int i = cnt.size() - 1; i > -1; i--)
+    {
+        ans.push_back(cnt[i].second);
+    }
+
+    return ans;
 }
 
 int main()
@@ -66,14 +104,8 @@ int main()
 
     int t;
     cin >> t;
-    // queue<int> st;
-
     while (t--)
     {
-        string s;
-        char i = 4;
-        s.push_back(i + 48);
-        cout << s;
     }
     return 0;
 }

@@ -1,78 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct ListNode
+void bfs(vector<vector<int>> &list, vector<int> &ans, int src, bool visited[])
 {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
+    queue<int> q;
+    q.push(src);
+    visited[src] = true;
+    while (q.empty() == false)
+    {
+        int curr = q.front();
+        ans.push_back(curr);
+        q.pop();
+        for (auto it : list[curr])
+        {
+            if (visited[it] == false)
+            {
+                q.push(it);
+                visited[it] = true;
+            }
+        }
+    }
+}
 
-string simplifyPath(string arr)
+void dfs(vector<vector<int>> &list, vector<int> &ans, int src, vector<bool> &visited)
 {
-    stack<char> s;
-    for (int i = 0; i < arr.size(); i++)
+    visited[src] = true;
+    ans.push_back(src);
+    for (auto it : list[src])
     {
-        if (arr[i] == '/')
+        if (visited[it] == false)
         {
-            if (s.empty() == true)
-            {
-                s.push('/');
-            }
-            else
-            {
-                if (s.top() != '/')
-                {
-                    s.push('/');
-                }
-            }
-        }
-        else if (arr[i] == '.')
-        {
-            while (s.empty() == false && s.top() != '/')
-            {
-                s.pop();
-            }
-            if (s.empty() == false)
-            {
-                s.pop();
-            }
-        }
-        else
-        {
-            s.push(arr[i]);
+            dfs(list, ans, it, visited);
         }
     }
-    if (s.empty() == false && s.top() == '/')
-    {
-        s.pop();
-    }
-    string str = "";
-    stack<char> temp;
-    while (s.empty() != true)
-    {
-        char x = s.top();
-        s.pop();
-        temp.push(x);
-    }
-    while (temp.empty() != true)
-    {
-        char x = temp.top();
-        str.push_back(x);
-        temp.pop();
-    }
-    return str;
 }
 
 int main()
 {
-    ListNode *A = new ListNode(1);
-    ListNode *b = new ListNode(2);
-    ListNode *c = new ListNode(3);
-    A->val = 5;
-    A->next = b;
-    b->next = c;
-    c->next = NULL;
-    cout << simplifyPath("/a/./b/");
+
+    int t;
+    cin >> t;
+    while (t--)
+    {
+    }
     return 0;
 }
