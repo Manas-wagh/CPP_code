@@ -196,8 +196,8 @@ bool DFS_m_cycle_det(vector<vector<int>> &v, int vtx)
 
 bool directed_cyl_ref(vector<vector<int>> &v, int src, vector<bool> &visited, vector<bool> &inque)
 {
-    visited[src] == true;
-    inque[src] == true;
+    visited[src] = true;
+    inque[src] = true;
     for (int u : v[src])
     {
         if (visited[u] == false && directed_cyl_ref(v, u, visited, inque))
@@ -215,16 +215,8 @@ bool directed_cyl_ref(vector<vector<int>> &v, int src, vector<bool> &visited, ve
 
 bool directed_cyl_m(vector<vector<int>> &v, int vtx)
 {
-    vector<bool> visited;
-    vector<bool> inque;
-    for (int i = 0; i < vtx; i++)
-    {
-        visited[i] = false;
-    }
-    for (int i = 0; i < vtx; i++)
-    {
-        inque[i] = false;
-    }
+    vector<bool> visited(vtx, false);
+    vector<bool> inque(vtx, false);
     for (int i = 0; i < vtx; i++)
     {
         if (visited[i] == false)

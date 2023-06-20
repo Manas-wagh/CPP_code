@@ -36,6 +36,47 @@ void creategraphw(vector<vector<int>> &matrix, int a, int b, int weight)
     matrix[a][b] = weight;
     matrix[b][a] = weight;
 }
+
+// ELOGV wala solution
+
+vector<int> sexyMST(vector<vector<int>> &edge, int vtx)
+{
+    vector<vector<pair<int, int>>> list(vtx);
+    for (int i = 0; i < edge.size(); i++)
+    {
+        list[edge[i][0]].push_back(make_pair(edge[i][1], edge[i][2]));
+        list[edge[i][1]].push_back(make_pair(edge[i][0], edge[i][2]));
+    }
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    bool visited[vtx] = {false};
+    vector<int> dist(vtx, {INT32_MAX});
+    int res = 0;
+    //
+    pq.push({0, 0});
+    dist[0] = 0;
+    while (pq.empty() == false)
+    {
+        int curr = pq.top().second;
+        pq.pop();
+        if (visited[curr] == true)
+        {
+            continue;
+        }
+        visited[curr] = true;
+        for (auto i : list[curr])
+        {
+            int v = i.first;
+            int wt = i.second;
+            if (visited[v] == false && dist[v] > dist[curr] + wt)
+            {
+                dist[v] = dist[curr] + wt;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+
 int main()
 {
 
