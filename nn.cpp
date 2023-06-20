@@ -1,64 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Solution
+
+int dx[8] = {-2, -1, 1, 2, -2, -1, 1, 2};
+int dy[8] = {-1, -2, -2, -1, 1, 2, 2, 1};
+
+bool bfs(vector<vector<int>> &dist, int n, int m, int x, int y)
 {
-public:
-    bool bfs(vector<vector<int>> &list, vector<pair<bool, int>> &visited, int src)
+    queue<pair<int, int>> q;
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+    q.push({x, y});
+    dist[x][y] = 0;
+    while (q.empty() == false)
     {
-
-        queue<int> q;
-        q.push(src);
-        visited[src].second = 1;
-        while (q.empty() == false)
+        int a = q.front().first;
+        int b = q.front().second;
+        q.pop();
+        visited[a][b] = true;
+        for (int i = 0; i < 8; i++)
         {
-
-            int frnt = q.front();
-            visited[frnt].first = true;
-
-            q.pop();
-            for (auto i : list[frnt])
+            int nx = a + dx[i];
+            int ny = b + dy[i];
+            if (nx >= 0 && ny >= 0 && nx < n && ny < m && visited[nx][ny] == false)
             {
-
-                if (visited[i].first == false)
-                {
-                    visited[i].second = 1 ? visited[src].second = 2 : 2;
-                    q.push(i);
-                }
-                else
-                {
-                    if (visited[i].second == visited[src].second)
-                    {
-                        return false;
-                    }
-                }
+                q.push({nx, ny});
+                dist[nx][ny] = min(dist[nx][ny], dist[a][b] + 1);
             }
         }
-        return true;
     }
-    bool isBipartite(vector<vector<int>> &list)
-    {
-        vector<pair<bool, int>> visited(list.size(), {false, -1});
-        for (int i = 0; i < list.size(); i++)
-        {
+}
 
-            if (visited[i].first == false)
-            {
-                if (bfs(list, visited, i) == false)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-};
+int knight(int n, int m, int x, int y, int fx, int fy)
+{
+    vector<vector<int>> dist(n, vector<int>(m, INT32_MAX));
+    bfs(dist, n, m, x - 1, y - 1);
+    return dist[fx - 1][fy - 1];
+}
+
 int main()
 {
 
-    int t;
-    cin >> t;
-    while (t--)
-    {
-    }
+    cout << knight(8, 8, 1, 1, 8, 8);
     return 0;
 }
