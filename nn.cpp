@@ -1,44 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int dx[8] = {-2, -1, 1, 2, -2, -1, 1, 2};
-int dy[8] = {-1, -2, -2, -1, 1, 2, 2, 1};
-
-bool bfs(vector<vector<int>> &dist, int n, int m, int x, int y)
+int dp[7000][7000] = {-1};
+bool solve(string A, int i, int j, unordered_set<string> &dict)
 {
-    queue<pair<int, int>> q;
-    vector<vector<bool>> visited(n, vector<bool>(m, false));
-    q.push({x, y});
-    dist[x][y] = 0;
-    while (q.empty() == false)
+    if (i > j)
     {
-        int a = q.front().first;
-        int b = q.front().second;
-        q.pop();
-        visited[a][b] = true;
-        for (int i = 0; i < 8; i++)
-        {
-            int nx = a + dx[i];
-            int ny = b + dy[i];
-            if (nx >= 0 && ny >= 0 && nx < n && ny < m && visited[nx][ny] == false)
-            {
-                q.push({nx, ny});
-                dist[nx][ny] = min(dist[nx][ny], dist[a][b] + 1);
-            }
-        }
+        return false;
     }
+    if (dict.find(A.substr(i, j - i + 1)) != dict.end())
+    {
+        return dp[i][j] = true;
+    }
+    if (dp[i][j] != -1)
+    {
+        return dp[i][j];
+    }
+    bool flag = false;
+    for (int k = i; k < j; k++)
+    {
+        flag = flag || (solve(A, i, k, dict) && solve(A, k + 1, j, dict));
+    }
+    return dp[i][j] = flag;
 }
 
-int knight(int n, int m, int x, int y, int fx, int fy)
+int wordBreak(string A, vector<string> &B)
 {
-    vector<vector<int>> dist(n, vector<int>(m, INT32_MAX));
-    bfs(dist, n, m, x - 1, y - 1);
-    return dist[fx - 1][fy - 1];
+    unordered_set<string> dict;
+    for (int i = 0; i < B.size(); i++)
+    {
+        dict.insert(B[i]);
+    }
+    return solve(A, 0, A.size() - 1, dict);
 }
 
 int main()
 {
 
-    cout << knight(8, 8, 1, 1, 8, 8);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+    }
     return 0;
 }

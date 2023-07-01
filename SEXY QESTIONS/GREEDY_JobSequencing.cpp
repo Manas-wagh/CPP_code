@@ -1,33 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool mycmp(pair<int, int> a, pair<int, int> b)
+class Solution
 {
-    double r1 = (double)a.first / a.second;
-    double r2 = (double)b.first / b.second;
-    return (r1 > r2);
-}
-
-double FKnapsack(pair<int, int> arr[], int n)
-{
-    double res = 0.0;
-    int curr_t = 0;
-    sort(arr, arr + n, mycmp);
-
-    for (int i = 0; i < n; i++)
+public:
+    int solve(int s, int &n, int end, vector<int> &dp, vector<vector<int>> &v)
     {
-        if (arr[i].second > curr_t)
+        if (s >= n)
         {
-            res += arr[i].first;
-            curr_t++;
+            return 0;
         }
-        else
+        if (v[s][0] < end)
         {
+            return solve(s + 1, n, end, dp, v);
         }
+        if (dp[s] != -1)
+            return dp[s];
+        return dp[s] = max(solve(s + 1, n, end, dp, v), v[s][2] + solve(s + 1, n, v[s][1], dp, v));
     }
-    cout << curr_t << endl;
-    return res;
-}
+    int jobScheduling(vector<int> &startTime, vector<int> &endTime, vector<int> &profit)
+    {
+        vector<vector<int>> v;
+        int i, n = endTime.size();
+        for (i = 0; i < n; i++)
+        {
+            v.push_back({startTime[i], endTime[i], profit[i]});
+        }
+        sort(v.begin(), v.end());
+        vector<int> dp(n, -1);
+        return solve(0, n, 0, dp, v);
+    }
+};
 
 int main()
 {
@@ -39,6 +42,5 @@ int main()
     {
         cin >> arr[i].first >> arr[i].second;
     }
-    cout << FKnapsack(arr, t);
     return 0;
 }

@@ -3,6 +3,7 @@
     "iostream": "cpp",
     "new": "cpp",
     "bitset": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "*.tcc": "cpp"
   }
 }

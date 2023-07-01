@@ -3,7 +3,7 @@ using namespace std;
 
 // lcs plain recursive
 
-int LCS(string s1, string s2, int m, int n)
+int LCS(string &s1, string &s2, int m, int n)
 {
     if (m == 0 || n == 0)
     {
@@ -21,7 +21,7 @@ int LCS(string s1, string s2, int m, int n)
 
 // lcs memoized
 
-int LCSmemo(string s1, string s2, int m, int n)
+int LCSmemo(string &s1, string &s2, int m, int n)
 {
     int dp[m + 1][n + 1];
     memset(dp, -1, sizeof(dp));
@@ -54,7 +54,7 @@ int LCSmemo(string s1, string s2, int m, int n)
 
 // lcs tabulized
 
-int LCStab(string s1, string s2, int m, int n)
+int LCStab(string &s1, string &s2, int m, int n)
 {
 
     int dp[m + 1][n + 1] = {-1};
@@ -88,5 +88,6 @@ int main()
 
     string s1 = "manas";
     string s2 = "manasvi";
+    cout << LCStab(s1, s2, s1.size(), s2.size());
     return 0;
 }
