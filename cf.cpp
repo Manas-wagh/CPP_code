@@ -1,33 +1,60 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define vi vector<int>
+#define vb vector<bool>
+#define vll vector<long long>
+#include <chrono>
+
+auto init = []()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    return 0;
+}();
 
 int main()
 {
     int t;
     cin >> t;
+
     while (t--)
     {
         int n;
         cin >> n;
-        string str;
-        cin >> str;
-        int rec = 0;
-        int sum = 1;
-        for (int i = 1; i < n; i++)
+        int res = 0;
+        int arr[n];
+
+        int maxi = 1;
+        while (maxi <= 1e9)
         {
-            if (str[i] != str[i - 1])
+            maxi *= 2;
+        }
+        maxi--;
+        int mint = maxi;
+        int xori = maxi;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+        for (int i = 0; i < n; i++)
+        {
+            mint = mint & arr[i];
+        }
+        for (int i = 0; i < n; i++)
+        {
+            xori = xori & arr[i];
+            if (xori == 0)
             {
-                rec = max(rec, sum);
-                sum = 1;
-            }
-            else
-            {
-                sum++;
+                res++;
+                xori = maxi;
             }
         }
-        rec = max(sum, rec);
-        int ans = rec + 1;
-        cout << ans << endl;
+        // trial uotput
+        res += mint > 0;
+        cout << res << endl;
     }
+
     return 0;
 }
