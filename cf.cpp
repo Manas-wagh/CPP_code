@@ -1,60 +1,65 @@
+#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define vi vector<int>
-#define vb vector<bool>
-#define vll vector<long long>
-#include <chrono>
-
-auto init = []()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    return 0;
-}();
-
 int main()
 {
     int t;
     cin >> t;
-
     while (t--)
     {
         int n;
         cin >> n;
-        int res = 0;
-        int arr[n];
-
-        int maxi = 1;
-        while (maxi <= 1e9)
+        string s;
+        cin >> s;
+        bool flag = false;
+        if (n % 3 == 1)
         {
-            maxi *= 2;
+            cout << "Yes" << endl;
         }
-        maxi--;
-        int mint = maxi;
-        int xori = maxi;
-        for (int i = 0; i < n; i++)
+        else
         {
-            cin >> arr[i];
-        }
-        for (int i = 0; i < n; i++)
-        {
-            mint = mint & arr[i];
-        }
-        for (int i = 0; i < n; i++)
-        {
-            xori = xori & arr[i];
-            if (xori == 0)
+            for (char ele = 'a'; ele <= 'z'; ele++)
             {
-                res++;
-                xori = maxi;
+                int fi = n + 1, li = -1;
+                for (int i = 0; i < n; i++)
+                {
+                    if (s[i] == ele && i % 3 == 0)
+                    {
+                        fi = i;
+                        break;
+                    }
+                    else
+                    {
+                    }
+                }
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    int alt = n - 1 - i;
+                    if (s[i] == ele && alt % 3 == 0)
+                    {
+                        li = i;
+                        break;
+                    }
+                    else
+                    {
+                    }
+                }
+
+                if (fi < li)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                cout << "Yes" << endl;
+            }
+            else
+            {
+                cout << "No" << endl;
             }
         }
-        // trial uotput
-        res += mint > 0;
-        cout << res << endl;
     }
-
     return 0;
 }
